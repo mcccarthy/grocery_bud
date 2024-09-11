@@ -265,7 +265,7 @@ Grocery List
 }
 .alert-danger {
 	color: #f4f4f4;
-	background: #1ea93f;
+	background: var(--clr-red-dark);
 }
 .alert-success {
 	color: #f4f4f4;

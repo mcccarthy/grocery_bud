@@ -86,16 +86,26 @@ function displayAlert(text, action) {
 
 // clear items
 function clearItems() {
-	const items = document.querySelectorAll('.grocery-item');
-	if (items.length > 0) {
-		items.forEach(function (item) {
-			list.removeChild(item);
-		});
+	try {
+		if (confirm('Are you sure you want to clear the list?')) {
+			const items = document.querySelectorAll('.grocery-item');
+			if (items !== null && items.length > 0) {
+				items.forEach(function (item) {
+					if (item !== null) {
+						list.removeChild(item);
+					} else {
+						throw new Error('item is null');
+					}
+				});
+			}
+			container.classList.remove('show-container');
+			displayAlert('List Cleared', 'danger');
+			setBackToDefault();
+			localStorage.removeItem('list');
+		}
+	} catch (error) {
+		console.error(error);
 	}
-	container.classList.remove('show-container');
-	displayAlert('empty list', 'danger');
-	setBackToDefault();
-	localStorage.removeItem('list');
 }
 
 // delete item
@@ -127,7 +137,7 @@ function editItem(e) {
 	//
 	submitBtn.textContent = 'edit';
 }
-// set backt to defaults
+// set back to defaults
 function setBackToDefault() {
 	grocery.value = '';
 	editFlag = false;
